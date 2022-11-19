@@ -1,0 +1,91 @@
+{% extends '../base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}{{ theme.themeName }}{% endblock %}
+
+{% block content %}
+<style>
+    #{{color}} {
+        background-color: #{{ color }};
+    }
+</style>
+{% if user.is_authenticated %}
+    <section class="lesson-detail" id="lesson-detail">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a class="link-text-blue" href="{% url 'courseList' %}">Артқа</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">{{ theme.themeName }}</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="container">
+            <h1 class="mb-5">{{ theme.themeName }}</h1>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="video">
+                        <iframe width="100%" height="450" src="{{ theme.videoUrl }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="description">
+                        <h2>Тақырыптың сипаттамасы:</h2>
+                        <p>
+                            {{ theme.themeDescription }}
+                            
+                        </p>
+                    </div>
+                    <div class="comments">
+                        <h3 class="text-blue">Пікір қалдыру</h3>
+                        <form method="post" style="margin-top: 1.3em;">
+                            {{ form|crispy }}
+                            {% csrf_token %}
+                            <button type="submit" class="primary-button">Еңгізу</button>
+                        </form>
+                    </div>
+                    {% for comment in comments %}
+                    <div class="comments">
+                        <div class="user-data">
+                            <div class="row">
+                                <div class="col-1">
+                                    
+                                    <div class="avatar" id="{{ color }}">
+                                        <div class="letter">
+                                            {{ comment.user|make_list|first }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <strong>@{{ comment.user }}</strong>
+                                    <br>
+                                    <b>{{ comment.created_on|time:"h:i" }} {{ comment.created_on|date:"d.m.Y" }}</b>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comment">
+                            {{ comment.body | linebreaks }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="col-md-4">
+                    <div class="playlist-card">
+                        <h2 class="text-white">Плейлист</h2>
+                        <ul class="nav flex-column">
+                            {% for theme in themes %}
+                            <li class="nav-item mb-2"><a href="{% url 'courseList' %}{{theme.course.slug}}/lessons/{{theme.pk}}" class="nav-link p-0 text-white">{{ forloop.counter }}. {{ theme.themeName }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% else %}
+    <section class="lesson-detail" id="lesson-detail-list">
+        <div class="container">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              Платформамен жұмыс жасау үшін тіркеліңіз немесе платформаға кіріңіз
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    </section>
+{% endif %}
+{% endblock %}

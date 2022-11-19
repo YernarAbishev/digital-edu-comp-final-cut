@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" href="{% static './img/favicon.svg' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static './css/style.css' %}">
+    <link rel="stylesheet" href="{% static './css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header class="navbar fixed-top navbar-expand-lg bg-white border-bottom-blue">
+        <div class="container">
+          <a class="navbar-brand" href="{% url 'mainPage' %}">
+            <img class="logo" src="{% static './img/logo.svg' %}" alt="Logo">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="header-link" href="{% url 'mainPage' %}">Басты бет</a>
+                </li>
+                <li class="nav-item">
+                    <a class="header-link" href="{% url 'aboutProjectPage' %}">Жоба туралы</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="header-link" href="{% url 'courseList' %}">Курстар</a>
+                </li>
+                {% if user.is_superuser %}
+                <li class="nav-item">
+                    <a class="header-link" href="{% url 'admin:index' %}">Админ-панель</a>
+                </li>
+                {% endif %}
+                <li class="nav-item dropdown">
+                    <a class="header-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-user"></i> {{ user.username }}
+                    </a>
+                    <ul class="dropdown-menu">                      
+                      <li><a class="dropdown-item text-danger" href="{% url 'logoutUser' %}"><i class="fa-solid fa-right-from-bracket"></i> Шығу</a></li>
+                    </ul>
+                </li>
+
+                {% else %}
+                <div class="nav-item">
+                    <a href="{% url 'signUp' %}" class="primary-button">Тіркелу</a>
+                </div>
+                <div class="nav-item">
+                    <a href="{% url 'logIn' %}" class="primary-outlined-button">Кіру</a>
+                </div>
+                {% endif %}
+            </ul>
+          </div>
+        </div>
+    </header>
+
+    <!--Dynamic template-->
+    {% block content %}
+    {% endblock %}
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="footer-logo">
+                        <img src="{% static './img/footer-logo.svg' %}" class="footer-logo" alt="footer-logo">
+                    </div>
+                    <div class="footer-description">
+                        <p class="text-white">&copy;DidEduComp 2022-2023. Әзірлеуші: <a href="#" class="author">Аджан С.З.</a></p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <h3 class="text-white">Мәзір</h3>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="{% url 'mainPage' %}" class="nav-link p-0 text-white">Басты бет</a></li>
+                        <li class="nav-item mb-2"><a href="{% url 'aboutProjectPage' %}" class="nav-link p-0 text-white">Жоба туралы</a></li>
+                        <li class="nav-item mb-2"><a href="{% url 'courseList' %}" class="nav-link p-0 text-white">Курстар</a></li>
+                        <li class="nav-item mb-2"><a href="{% url 'signUp' %}" class="nav-link p-0 text-white">Тіркелу</a></li>
+                        <li class="nav-item mb-2"><a href="{% url 'logIn' %}" class="nav-link p-0 text-white">Кіру</a></li>
+                      </ul>
+                </div>
+                <div class="col-md-4">
+                    <h3 class="text-white">Әлеуметтік желілер</h3>
+                    <div class="footer-socials">
+                        <a href="#" class="text-white">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-white">
+                            <i class="fa-brands fa-telegram"></i>
+                        </a>
+                        <a href="#" class="text-white">
+                            <i class="fa-brands fa-youtube"></i>
+                        </a>
+                        <a href="#" class="text-white">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static './js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

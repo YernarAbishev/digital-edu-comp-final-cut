@@ -1,0 +1,69 @@
+{% extends '../base.html' %}
+{% load static %}
+{% block title %}Курстар тізімі{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <section class="course-list" id="course-list">
+        <div class="container">
+            <h1 class="mb-5">Курстар тізімі</h1>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="category-card mb-3">
+                        <form action="{% url 'courseList' %}">
+                            <div class="row">
+                                <div class="col-9">
+                                    <input class="form-control form-control-sm" type="search" name="search" placeholder="Курсты іздеу" aria-label=".form-control-lg example">
+                                </div>
+                                <div class="col-3">
+                                    <button type="submit" class="white-outlined-button" style="font-size: 12px;">
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="category-card">
+                        <h2>Бөлімдер</h2>
+                        <ul class="nav flex-column">
+                            <li class="nav-item mb-2"><a href="{% url 'courseList' %}" class="nav-link p-0 text-white">Бүкіл курстар</a></li>
+                            {% for category in categories %}
+                            <li class="nav-item mb-2"><a href="{{ category.get_absolute_url }}" class="nav-link p-0 text-white">{{ category.categoryName }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="course-list-card">
+                        <h2>Курстар</h2>
+                        <div class="row">
+                            {% for course in courses %}
+                            <div class="col-md-4 mb-4">
+                                <div class="course-card h-100">
+                                    <div class="course-cover">
+                                        <img src="{{ course.courseCover.url }}" alt="{{ course.courseName }}">
+                                    </div>
+                                    <h3 class="course-title">{{ course.courseName }}</h3>
+                                    <a href="{{ course.category.slug }}" class="course-category">#{{ course.category.slug }}</a>
+                                    <h4 class="course-date"><strong>Жарияланған күні:</strong> {{ course.postDate|date:"d.m.Y" }}</h4>
+                                    <a href="{{ course.get_absolute_url }}" class="primary-button">Қарау</a>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% else %}
+    <section class="course-list" id="course-list">
+        <div class="container">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              Платформамен жұмыс жасау үшін тіркеліңіз немесе платформаға кіріңіз
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    </section>
+{% endif %}
+{% endblock %}

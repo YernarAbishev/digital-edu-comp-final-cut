@@ -1,0 +1,32 @@
+{% extends '../base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}Платформаға кіру{% endblock %}
+
+{% block content %}
+    <section class="about" id="about">
+        <div class="container">
+            <h1 class="mb-4">Платформаға кіру</h1>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="auth-sign-card h-100">
+                        <form method="post">
+                            <h4 class="text-blue mb-4">Деректерді толтырыңыз</h4>
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <button class="auth-button mt-3">Кіру</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="auth-sign-card h-100">
+                        <div class="image-container mb-3">
+                            <img src="{% static './img/login.svg' %}" alt="Login">
+                        </div>
+                        <p class="text-center">Егер сізде аккаунта жоқ болса, платформаға <a class="link-text-blue" href="{% url 'signUp' %}">тіркеліңіз</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

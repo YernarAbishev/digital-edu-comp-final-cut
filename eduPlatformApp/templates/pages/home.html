@@ -1,0 +1,55 @@
+{% extends '../base.html' %}
+
+{% block title %}Басты бет{% endblock %}
+
+{% block content %}
+    <section class="main" id="main">
+        <div class="container">
+            {% if messages %}
+            <div id="alert" style="width: 50%; margin: 0 auto;">
+                <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+            {% endif %}
+            <h1>Digital Edu</h1>
+            <p>DidEduComp - бұл сандық технологияларды үйренуге және оларды білім беруде қолдануға арналған платформа. Сабаққа әртүрлі тәсілдермен дайындалуға тырысыңыз және өзіңізге ыңғайлы нұсқаларды таңдаңыз. Оқушылардың сабаққа деген қызығушылығын арттырыңыз және офлайн және онлайн оқыту арасындағы сызықты өшіре аласыз.</p>
+            <a href="#" class="white-outlined-button">Жұмыс істеу</a>
+        </div>
+    </section>
+
+    <section class="advantages" id="advantages">
+        <div class="container">
+            <h2 class="text-blue">Бұл платформада</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="advantage-card">
+                        <div class="icon">
+                            <i class="fa-solid fa-database"></i>
+                        </div>
+                        <h3 class="advantage-title">Курстар базасы</h3>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="advantage-card">
+                        <div class="icon">
+                            <i class="fa-solid fa-pager"></i>
+                        </div>
+                        <h3 class="advantage-title">Қолайлы интерфейс</h3>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="advantage-card">
+                        <div class="icon">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                        </div>
+                        <h3 class="advantage-title">Кроссплатформалы</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

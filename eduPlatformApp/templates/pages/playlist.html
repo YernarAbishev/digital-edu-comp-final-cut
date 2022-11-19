@@ -1,0 +1,31 @@
+{% extends '../base.html' %}
+{% block title %}{{ course.courseName }}{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <section class="playlist" id="playlist">
+        <div class="container">
+            <h1 class="mb-5">{{ course.courseName }}</h1>
+            <div class="row">
+                {% for theme in themes %}
+                <div class="col-md-3 mb-4">
+                    <div class="playlist-card h-100">
+                        <h3 class="mb-3">{{ forloop.counter }}. {{ theme.themeName }}</h3>
+                        <a href="{{ theme.pk }}" class="white-outlined-button"><i class="fa-solid fa-play"></i></a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% else %}
+    <section class="playlist" id="playlist">
+        <div class="container">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              Платформамен жұмыс жасау үшін тіркеліңіз немесе платформаға кіріңіз
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    </section>
+{% endif %}
+{% endblock %}
