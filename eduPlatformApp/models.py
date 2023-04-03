@@ -3,6 +3,8 @@ from django.urls import reverse
 from datetime import datetime
 from django.contrib.auth.models import User
 from django.db.models import Q
+from tinymce.models import HTMLField
+
 
 class Category(models.Model):
     categoryName = models.CharField("Category name", max_length=255)
@@ -38,7 +40,7 @@ class Course(models.Model):
 class Theme(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name="Course")
     themeName = models.CharField("Theme name", max_length=255)
-    themeDescription = models.TextField("Theme description")
+    themeDescription = HTMLField("Theme Description")
     videoUrl = models.CharField("Video URL", max_length=500)
 
     def __str__(self):
